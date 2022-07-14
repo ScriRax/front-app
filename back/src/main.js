@@ -2,11 +2,8 @@ const mysql = require("mysql");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 3000;
-/* tixav80980@hekarro.com
-alwaysdata : nom => cat-api
-mdp => !cat-api59
-*/
+//const port = 3000;
+
 const connection = mysql.createConnection({
   host: "mysql-cat-api.alwaysdata.net",
   user: "cat-api",
@@ -115,5 +112,5 @@ app.get("/login", (req, res) => {
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Listening at ${process.env.PORT}`);
 });

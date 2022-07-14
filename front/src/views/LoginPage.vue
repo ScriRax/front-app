@@ -81,7 +81,7 @@ export default {
         .get("/login?email=" + this.user.email + "&password=" + this.user.password)
         .then((logInfo) => {
           this.logInfo = logInfo.data;
-          if (this.logInfo[0] == null) {
+          if (this.logInfo[0] === undefined) {
             this.msg['conn'] = 'Compte utilisateur introuvable ou mot de passe incorrect'
           } else {
             localStorage.name = this.logInfo[0].name;

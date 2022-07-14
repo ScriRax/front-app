@@ -269,7 +269,7 @@ export default {
       this.msg = [];
     },
     loadCat() {
-      if (this.localStorage.name == undefined) {
+      if (this.localStorage.name === undefined) {
         this.$router.push({ name: "Login" });
       }
       this.isLoading = true;
@@ -277,7 +277,7 @@ export default {
         .get("/cat")
         .then((cats) => {
           this.cats = cats.data;
-          if (this.cats[0] == null) {
+          if (this.cats[0] === undefined) {
             this.msg["nocat"] = "Aucun chat disponible en base !";
           } else {
             this.msg["nocat"] = "";
@@ -300,12 +300,12 @@ export default {
     },
     verifyInput() {
       if (
-        this.addcat.race == null ||
-        this.addcat.color == null ||
-        this.addcat.life == null ||
-        this.addcat.origin == null ||
-        this.addcat.stat == null ||
-        this.addcat.img == null
+        this.addcat.race === undefined ||
+        this.addcat.color === undefined ||
+        this.addcat.life === undefined ||
+        this.addcat.origin === undefined ||
+        this.addcat.stat === undefined ||
+        this.addcat.img === undefined
       ) {
         this.msg["emptyInput"] = "Veuillez remplir tout les champs";
         this.isLoading = false;
@@ -316,12 +316,12 @@ export default {
     },
     verifyInputEdit() {
       if (
-        this.editcat.race == null ||
-        this.editcat.color == null ||
-        this.editcat.life == null ||
-        this.editcat.origin == null ||
-        this.editcat.stat == null ||
-        this.editcat.img == null
+        this.editcat.race === undefined ||
+        this.editcat.color === undefined ||
+        this.editcat.life === undefined ||
+        this.editcat.origin === undefined ||
+        this.editcat.stat === undefined ||
+        this.editcat.img === undefined
       ) {
         this.msg["emptyInput"] = "Veuillez remplir tout les champs";
         this.isLoading = false;
@@ -333,7 +333,7 @@ export default {
     async addCat() {
       this.isLoading = true;
       const result = this.verifyInput();
-      if (result == true) {
+      if (result === true) {
         await axios
           .get("/cat_from_race", { params: { race: this.addcat.race } })
           .then((catFound) => {
@@ -360,7 +360,7 @@ export default {
     async modifyCat() {
       this.isLoading = true;
       const result = this.verifyInputEdit();
-      if (result == true) {
+      if (result === true) {
         try {
           await axios.put("/edit_cat", { data: this.editcat });
         } catch (error) {
@@ -402,7 +402,7 @@ export default {
 }
 
 .header {
-  height: 280px;
+  height: 185px;
 }
 
 #btn {
@@ -464,6 +464,7 @@ export default {
 
 .cat-card {
   display: flex;
+  justify-content: space-between;
   border: 2px solid #11998e;
   margin-top: 10px;
   margin-left: 20px;
@@ -471,11 +472,10 @@ export default {
 }
 
 .cat-img {
-  width: 20%;
+  width: 16%;
 }
 
 .div-btn {
-  width: 40%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

@@ -59,7 +59,6 @@
           />
           <span class="error" v-if="msg.password">{{ msg.password }}</span>
         </div>
-        <!-- <span style="color: #42b983" v-if="msg.info">{{ msg.info }}</span> -->
         <span style="color: rgb(204, 28, 28)" v-if="msg.error">{{
           msg.error
         }}</span>
@@ -96,17 +95,17 @@ export default {
     },
     verifyInput() {
       if (
-        this.user.name == null ||
-        this.user.surname == null ||
-        this.user.password == null
+        this.user.name === undefined ||
+        this.user.surname === undefined ||
+        this.user.password === undefined
       ) {
-        if (this.user.name == null) {
+        if (this.user.name === undefined) {
           this.msg["name"] = "Veuillez rentrer un prénom";
         }
-        if (this.user.surname == null) {
+        if (this.user.surname === undefined) {
           this.msg["surname"] = "Veuillez rentrer un nom";
         }
-        if (this.user.password == null) {
+        if (this.user.password === undefined) {
           this.msg["password"] = "Veuillez rentrer un mot de passe";
         }
         this.isLoading = false;
@@ -120,13 +119,12 @@ export default {
         .get("/user_exist?email=" + this.user.email)
         .then((regInfo) => {
           this.regInfo = regInfo.data;
-          console.log(this.regInfo[0]);
           if (!this.regInfo[0]) {
-            return true;
+            return false;
           } else {
             this.isLoading = false;
             this.msg["error"] = "L'utilisateur existe déjà";
-            return false;
+            return true;
           }
         })
         .catch((error) => console.error(error))
@@ -136,8 +134,8 @@ export default {
       this.isLoading = true;
       const email = this.validateEmail();
       const result = this.verifyInput();
-      this.userAlreadyExist();
-      if (result == true && email == true && this.msg["error"] == undefined) {
+      const userExist = this.userAlreadyExist();
+      if (result === true && email === true && userExist === false) {
         try {
           await axios.post("/register", this.user);
         } catch (error) {
