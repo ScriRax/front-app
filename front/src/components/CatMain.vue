@@ -252,6 +252,7 @@ export default {
       showModalEdit: false,
       localStorage: localStorage,
       msg: [],
+      url: process.env.VUE_APP_API_URL
     };
   },
   methods: {
@@ -274,7 +275,7 @@ export default {
       }
       this.isLoading = true;
       axios
-        .get("/cat")
+        .get(this.url + "/cat")
         .then((cats) => {
           this.cats = cats.data;
           if (this.cats[0] === undefined) {
@@ -289,7 +290,7 @@ export default {
     deleteCat(id_cat) {
       this.isLoading = true;
       try {
-        axios.delete("/delete", { data: { id: id_cat } });
+        axios.delete(this.url + "/delete", { data: { id: id_cat } });
       } catch (error) {
         this.isLoading = false;
         console.error(error);
@@ -335,11 +336,11 @@ export default {
       const result = this.verifyInput();
       if (result === true) {
         await axios
-          .get("/cat_from_race", { params: { race: this.addcat.race } })
+          .get(this.url + "/cat_from_race", { params: { race: this.addcat.race } })
           .then((catFound) => {
             if (!catFound.data[0]) {
               try {
-                axios.post("/add_cat", this.addcat);
+                axios.post(this.url + "/add_cat", this.addcat);
               } catch (error) {
                 console.error(error);
               } finally {
@@ -362,7 +363,7 @@ export default {
       const result = this.verifyInputEdit();
       if (result === true) {
         try {
-          await axios.put("/edit_cat", { data: this.editcat });
+          await axios.put(this.url + "/edit_cat", { data: this.editcat });
         } catch (error) {
           this.isLoading = false;
           console.error(error);

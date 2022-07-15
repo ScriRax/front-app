@@ -49,7 +49,8 @@ export default {
       user: {},
       isLoading: false,
       msg: [],
-      logInfo: {}
+      logInfo: {},
+      url: process.env.VUE_APP_API_URL
     };
   },
   methods: {
@@ -77,8 +78,9 @@ export default {
           this.isLoading = false;
         }
       } else {
+        console.log(this.url);
       axios
-        .get("/login?email=" + this.user.email + "&password=" + this.user.password)
+        .get(this.url + "/login?email=" + this.user.email + "&password=" + this.user.password)
         .then((logInfo) => {
           this.logInfo = logInfo.data;
           if (this.logInfo[0] === undefined) {

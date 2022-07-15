@@ -78,6 +78,7 @@ export default {
       user: {},
       isLoading: false,
       msg: [],
+      url: process.env.VUE_APP_API_URL
     };
   },
   methods: {
@@ -116,7 +117,7 @@ export default {
     },
     userAlreadyExist() {
       axios
-        .get("/user_exist?email=" + this.user.email)
+        .get(this.url + "/user_exist?email=" + this.user.email)
         .then((regInfo) => {
           this.regInfo = regInfo.data;
           if (!this.regInfo[0]) {
@@ -137,7 +138,7 @@ export default {
       const userExist = this.userAlreadyExist();
       if (result === true && email === true && userExist === false) {
         try {
-          await axios.post("/register", this.user);
+          await axios.post(this.url + "/register", this.user);
         } catch (error) {
           console.error(error);
         } finally {
