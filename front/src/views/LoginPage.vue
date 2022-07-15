@@ -78,7 +78,6 @@ export default {
           this.isLoading = false;
         }
       } else {
-        console.log(this.url);
       axios
         .get(this.url + "/login?email=" + this.user.email + "&password=" + this.user.password)
         .then((logInfo) => {
